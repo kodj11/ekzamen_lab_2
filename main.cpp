@@ -3,20 +3,24 @@
 using namespace std;
 
 // Abstract class kakogo-to tela
-// Iz-za virtual double Volume() const = 0;
+// Abstract -> Iz-za virtual double Volume() const = 0;
 class Body {
 private:
     // Plotnost' 
     // zashita - private
     double density_;
+
 public:
     Body(double density) : density_(density) {}
-
     // Chisto abstract
     virtual double Volume() const = 0;
     // Massa = plotnost' * znachenie y potomkov
     double Mass() const {
         return density_ * Volume();
+    }
+    // virtual dest tela
+    virtual ~Body() {
+        density_ = 0;
     }
 };
 
@@ -33,6 +37,10 @@ public:
     double Volume() const {
         return edge_ * edge_ * edge_;
     }
+    // virtual dest cuba
+    virtual ~Cube() {
+        edge_ = 0;
+    }
 };
 
 class Tetrahedron : public Body {
@@ -44,9 +52,13 @@ public:
     // construct 1 parametr - rebro
     //           2 parametr - plotnost'
     Tetrahedron(double edge, double density) : Body(density), edge_(edge) {}
-
+    // Znachenie tetraidera
     double Volume() const {
         return edge_ * edge_ * edge_ / (6 * sqrt(2));
+    }
+    // virtual dest tetraidera
+    virtual ~Tetrahedron() {
+        edge_ = 0;
     }
 };
 
